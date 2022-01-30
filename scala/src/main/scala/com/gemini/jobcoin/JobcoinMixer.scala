@@ -27,7 +27,7 @@ object JobcoinMixer {
     // Load Config
     val config = ConfigFactory.load()
 
-    // Test HTTP client
+    // HTTP client
     val client = new JobcoinClientImpl(config, StandaloneAhcWSClient())
 
     val depositInfoRepository = new DepositInfoRepositoryImpl
@@ -35,37 +35,6 @@ object JobcoinMixer {
 
     // starting the scheduler
     MixingScheduler(actorSystem, config, mixingService).start()
-
-//    val m = client
-//      .getAddressInfo(
-//        Address("f16bdae1-1bb2-4cc6-b6e1-66355dcf2d07")
-//      )
-//      .map(response => {
-//        println(s"Response:\n$response")
-//      })
-//
-//    Await.result(m, Duration.Inf)
-//
-//    val p = client
-//      .initiateTransfer(
-//        TransferDetails(
-//          fromAddress = Address("f16bdae1-1bb2-4cc6-b6e1-66355dcf2d07"),
-//          toAddress = Address("928068a4-37bf-4469-9195-958c7eaf8cb8"),
-//          amount = 20.1
-//        )
-//      )
-//      .map(response => {
-//        println(s"Response:\n$response")
-//      })
-//
-//    Await.result(p, Duration.Inf)
-//
-//    val l =
-//      client.getTransactions.map(response => {
-//        println(s"Response:\n$response")
-//      })
-//
-//    Await.result(l, Duration.Inf)
 
     try {
       while (true) {
