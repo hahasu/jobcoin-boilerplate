@@ -21,8 +21,8 @@ object JobcoinMixer {
 
   def main(args: Array[String]): Unit = {
     // Create an actor system
-    implicit val actorSystem = ActorSystem()
-    implicit val materializer = ActorMaterializer()
+    implicit val actorSystem: ActorSystem = ActorSystem()
+    implicit val materializer: ActorMaterializer = ActorMaterializer()
 
     // Load Config
     val config = ConfigFactory.load()
@@ -31,11 +31,10 @@ object JobcoinMixer {
     val client = new JobcoinClientImpl(config, StandaloneAhcWSClient())
 
     val depositInfoRepository = new DepositInfoRepositoryImpl
-    val mixingService = new MixingService(depositInfoRepository, client)
+    val mixingService = MixingService(depositInfoRepository, client)
 
     // starting the scheduler
-    val mixingScheduler =
-      new MixingScheduler(actorSystem, config, mixingService)
+    MixingScheduler(actorSystem, config, mixingService).start()
 
 //    val m = client
 //      .getAddressInfo(
