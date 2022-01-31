@@ -31,7 +31,6 @@ class MixingScheduler(
   private val transactionRepository = new TransactionRepositoryImpl
   private val settlingActorRef =
     SettlingActor(actorSystem, mixingService, transactionRepository)
-
   private val mixingActorRef =
     MixingActor(actorSystem, config, mixingService, settlingActorRef)
 
